@@ -54,6 +54,7 @@ def analyze_sentiment(text, encoding='UTF32'):
         'document': {
             'type': 'PLAIN_TEXT',
             'content': text,
+            'language': 'EN',
         },
         'encoding_type': encoding
     }
@@ -98,28 +99,28 @@ print(analyze_sentiment(data['headline'].values[0])['documentSentiment']['score'
 print("--- %s seconds ---" % (time.time() - start_time))
 
 
-from concurrent.futures.process import ProcessPoolExecutor
-from concurrent.futures import wait
-from concurrent.futures import as_completed
+#from concurrent.futures.process import ProcessPoolExecutor
+#from concurrent.futures import wait
+#from concurrent.futures import as_completed
 
 
-start_time = time.time()
-executor = ProcessPoolExecutor(100)
-futures = [executor.submit(sentiment, item) for item in data['headline'].values[:1000]]
-wait(futures)
-print("--- %s seconds ---" % (time.time() - start_time))
+#start_time = time.time()
+#executor = ProcessPoolExecutor(8)
+#futures = [executor.submit(sentiment, item) for item in data['headline'].values[:900]]
+#wait(futures)
+#print("--- %s seconds ---" % (time.time() - start_time))
 
-results = []
-for future in as_completed(futures):
-    try: 
-        results += [future.result()]
-    except:
-        results += [None]
+#results = []
+#for future in as_completed(futures):
+#    try: 
+#        results += [future.result()]
+#    except:
+#        results += [None]
 
 
-pd.DataFrame(results).to_csv('1.csv')
+#pd.DataFrame(results).to_csv('1.csv')
 
-# data['sentiment'] = data['headline'].apply(sentiment)
+data['sentiment'] = data['headline'].apply(sentiment)
 
-# data.to_csv('new_data.csv')
+data.to_csv('new_data.csv')
 
