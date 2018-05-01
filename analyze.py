@@ -83,7 +83,7 @@ def analyze_syntax(text, encoding='UTF32'):
 
     return response
 
-data = pd.read_csv('data.csv')
+data = pd.read_csv('data 2.csv')
 
 counter = 0
 def sentiment(article): 
@@ -122,5 +122,5 @@ print("--- %s seconds ---" % (time.time() - start_time))
 
 data['sentiment'] = data['headline'].apply(sentiment)
 
-data.to_csv('new_data.csv')
+data.to_csv('new_data_2.csv')
 
